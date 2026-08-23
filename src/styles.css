@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/switzer-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/switzer-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/switzer-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/switzer-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/switzer-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tempting";
+  src: url("/fonts/tempting.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-bg: #000000;
+  --color-surface: #111114;
+  --color-fg: #f3efe6;
+  --color-muted: #8c887e;
+  --color-primary: #e8e2d4;
+  --color-border: #2a2a2e;
+  --color-ink: #08080a;
+
+  --font-sans: "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-pixel: "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Tempting", "Great Vibes", cursive;
+
+  --text-display: clamp(1.65rem, 0.55rem + 4.6vw, 3.6rem);
+  --text-section: clamp(1.2rem, 0.75rem + 1.5vw, 2rem);
+  --text-quote: clamp(1.05rem, 0.75rem + 0.9vw, 1.4rem);
+  --text-micro: 0.6875rem;
+
+  --leading-display: 0.96;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-icon: cubic-bezier(0.2, 0, 0, 1);
+  --z-cursor: 70;
+  --z-skip: 80;
+
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+
+  --shadow-border: 0 0 0 1px rgb(243 239 230 / 0.08);
+  --shadow-border-hover: 0 0 0 1px rgb(243 239 230 / 0.16);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+}
+
+.font-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 0.85;
+}
+
+.font-display {
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+
+.copy-veil {
+  background: linear-gradient(
+    to top,
+    rgb(8 8 10 / 0.82) 0%,
+    rgb(8 8 10 / 0.48) 40%,
+    rgb(8 8 10 / 0.14) 70%,
+    rgb(8 8 10 / 0) 100%
+  );
+}
+
+.pixel-grid {
+  background-image:
+    linear-gradient(rgb(243 239 230 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(243 239 230 / 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: grid-drift 24s linear infinite;
+}
+
+.scanlines {
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgb(0 0 0 / 0.16) 3px
+  );
+  opacity: 0.14;
+}
+
+.grain-layer {
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.scroll-progress {
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: left;
+}
+
+.marquee-track {
+  animation: marquee-x 32s linear infinite;
+}
+
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 28px 28px;
+  }
+}
+
+.stagger-in {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(4px);
+  animation: fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.stagger-in:nth-child(1) {
+  animation-delay: 40ms;
+}
+.stagger-in:nth-child(2) {
+  animation-delay: 120ms;
+}
+.stagger-in:nth-child(3) {
+  animation-delay: 200ms;
+}
+.stagger-in:nth-child(4) {
+  animation-delay: 280ms;
+}
+.stagger-in:nth-child(5) {
+  animation-delay: 360ms;
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes flow-in {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-drift {
+  to {
+    transform: translateY(-22vh) scale(0.94);
+    opacity: 0;
+  }
+}
+
+@keyframes strip-pan {
+  from {
+    transform: translateX(12%);
+  }
+  to {
+    transform: translateX(-55%);
+  }
+}
+
+@keyframes field-lift {
+  to {
+    transform: translateY(-12%) scale(1.08);
+    opacity: 0.35;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .flow-in {
+    animation: flow-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 42%;
+  }
+
+  .flow-in-late {
+    animation: flow-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 12% entry 55%;
+  }
+
+  .flow-in-later {
+    animation: flow-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 22% entry 65%;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero-flow {
+    animation: hero-drift 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0vh 70vh;
+  }
+
+  .flow-strip-text {
+    animation: strip-pan 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track,
+  .stagger-in,
+  .flow-in,
+  .flow-in-late,
+  .flow-in-later,
+  .hero-flow,
+  .flow-strip-text,
+  .pixel-grid {
+    animation: none;
+  }
+
+  .scroll-progress {
+    transform: none;
+  }
+
+  .stagger-in,
+  .flow-in,
+  .flow-in-late,
+  .flow-in-later {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
