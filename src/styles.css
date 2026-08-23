@@ -57,8 +57,8 @@
   --font-pixel: "Switzer", ui-sans-serif, system-ui, sans-serif;
   --font-script: "Tempting", "Great Vibes", cursive;
 
-  --text-display: clamp(1.65rem, 0.55rem + 4.6vw, 3.6rem);
-  --text-section: clamp(1.2rem, 0.75rem + 1.5vw, 2rem);
+  --text-display: clamp(2.5rem, 1rem + 5.2vw, 4.3rem);
+  --text-section: clamp(1.9rem, 1rem + 3.4vw, 4.5rem);
   --text-quote: clamp(1.05rem, 0.75rem + 0.9vw, 1.4rem);
   --text-micro: 0.6875rem;
 
@@ -127,6 +127,15 @@
   font-weight: 800;
 }
 
+.ghost-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  color: rgb(243 239 230 / 0.1);
+  font-variant-numeric: tabular-nums;
+}
+
 .copy-veil {
   background: linear-gradient(
     to top,
@@ -137,23 +146,24 @@
   );
 }
 
+@media (max-width: 1023px) {
+  .copy-veil {
+    background: linear-gradient(
+      to top,
+      rgb(8 8 10 / 0.92) 0%,
+      rgb(8 8 10 / 0.78) 45%,
+      rgb(8 8 10 / 0.4) 80%,
+      rgb(8 8 10 / 0) 100%
+    );
+  }
+}
+
 .pixel-grid {
   background-image:
     linear-gradient(rgb(243 239 230 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(243 239 230 / 0.045) 1px, transparent 1px);
   background-size: 28px 28px;
   animation: grid-drift 24s linear infinite;
-}
-
-.scanlines {
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 2px,
-    rgb(0 0 0 / 0.16) 3px
-  );
-  opacity: 0.14;
 }
 
 .grain-layer {
@@ -211,6 +221,9 @@
 }
 .stagger-in:nth-child(5) {
   animation-delay: 360ms;
+}
+.stagger-in:nth-child(6) {
+  animation-delay: 440ms;
 }
 
 @keyframes fade-up {
@@ -281,7 +294,7 @@
   .hero-flow {
     animation: hero-drift 1s linear both;
     animation-timeline: scroll();
-    animation-range: 0vh 70vh;
+    animation-range: 0vh 38vh;
   }
 
   .flow-strip-text {

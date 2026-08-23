@@ -16,8 +16,7 @@ function Home() {
     <div className="relative">
       <ScrollRoot />
       <PixelField />
-      <div className="pixel-grid pointer-events-none fixed inset-0 z-[1] opacity-20" />
-      <div className="scanlines pointer-events-none fixed inset-0 z-[1]" />
+      <div className="pixel-grid pointer-events-none fixed inset-0 z-[1] opacity-15" />
       <PixelCursor />
       <div className="grain-layer pointer-events-none fixed inset-0 z-50 mix-blend-overlay" />
       <SiteNav />

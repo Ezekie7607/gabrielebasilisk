@@ -41,6 +41,15 @@ export function SiteNav() {
   }, []);
 
   useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -57,16 +66,16 @@ export function SiteNav() {
       </a>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color] duration-200",
-          scrolled || open ? "bg-bg/55 backdrop-blur-sm" : "bg-transparent",
+          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300",
+          scrolled || open
+            ? "border-border/60 bg-gradient-to-b from-bg/95 via-bg/85 to-bg/70 backdrop-blur-md"
+            : "border-transparent bg-transparent",
         )}
       >
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6">
           <a href="#top" className="flex items-baseline gap-2">
             <span className="font-pixel text-micro tracking-widest text-fg">{profile.brand}</span>
-            <span className="hidden font-script text-2xl text-muted sm:inline">
-              {profile.name}
-            </span>
+            <span className="hidden font-script text-2xl text-muted sm:inline">{profile.name}</span>
           </a>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
             {t.nav.map((item) => (
@@ -121,7 +130,7 @@ export function SiteNav() {
           "fixed inset-0 z-40 bg-bg/95 px-6 pt-24 backdrop-blur-sm transition-[opacity,transform] duration-200 ease-out-expo md:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
-        aria-hidden={!open}
+        inert={!open}
       >
         <nav className="flex flex-col gap-2" aria-label="Mobile">
           {t.nav.map((item, i) => (

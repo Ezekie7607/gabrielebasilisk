@@ -1,10 +1,11 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
-import { AuthProvider } from "@/lib/auth/provider";
-import { LocaleProvider } from "@/lib/locale";
-import { PreviewHostBridge } from "@/components/preview-host-bridge";
+import { LocaleProvider, useI18n } from "@/lib/locale";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "BASILISK — Gabriele Leoni";
+const SITE_URL = "https://gabrielebasilisk.vercel.app";
+const DESCRIPTION =
+  "Gabriele Leoni — web developer, designer, AI systems operator. I don't sell potential. I build machines that win.";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -12,12 +13,21 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: APP_NAME },
-      {
-        name: "description",
-        content:
-          "Gabriele Leoni — web developer, designer, AI systems operator. I don't sell potential. I build machines that win.",
-      },
-      { name: "theme-color", content: "#08080a" },
+      { name: "description", content: DESCRIPTION },
+      { name: "theme-color", content: "#000000" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "BASILISK" },
+      { property: "og:title", content: APP_NAME },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: `${SITE_URL}/og.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@BasiliskosLeo" },
+      { name: "twitter:title", content: APP_NAME },
+      { name: "twitter:description", content: DESCRIPTION },
+      { name: "twitter:image", content: `${SITE_URL}/og.jpg` },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -25,24 +35,31 @@ export const Route = createRootRoute({
       { rel: "preload", href: "/fonts/switzer-400.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: "/fonts/switzer-900.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: "/fonts/tempting.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-      { rel: "manifest", href: "/__grok/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
+      { rel: "canonical", href: SITE_URL },
     ],
   }),
-  component: () => (
-    <html lang="en" className="antialiased" suppressHydrationWarning>
+  component: RootComponent,
+});
+
+function RootComponent() {
+  return (
+    <LocaleProvider>
+      <Shell />
+    </LocaleProvider>
+  );
+}
+
+function Shell() {
+  const { lang } = useI18n();
+  return (
+    <html lang={lang} className="antialiased" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body className="bg-bg text-fg font-sans">
-        <PreviewHostBridge />
-        <LocaleProvider>
-          <AuthProvider>
-            <Outlet />
-          </AuthProvider>
-        </LocaleProvider>
+        <Outlet />
         <Scripts />
       </body>
     </html>
-  ),
-});
+  );
+}
