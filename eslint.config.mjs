@@ -15,6 +15,9 @@ export default tseslint.config(
       ".nitro/**",
       "node_modules/**",
       "src/routeTree.gen.ts",
+      // Throwaway probe/screenshot scripts land at the repo root during review passes.
+      // They are not application code and must never be able to turn `npm run lint` red.
+      ".*.mjs",
     ],
   },
   js.configs.recommended,

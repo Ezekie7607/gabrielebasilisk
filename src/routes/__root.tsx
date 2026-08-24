@@ -2,10 +2,31 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import { LocaleProvider, useI18n } from "@/lib/locale";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "BASILISK — Gabriele Leoni";
+const APP_NAME = "Gabriele Leoni — Web, Design, AI Agents · BASILISK";
 const SITE_URL = "https://gabrielebasilisk.vercel.app";
 const DESCRIPTION =
-  "Gabriele Leoni — web developer, designer, AI systems operator. I don't sell potential. I build machines that win.";
+  "Gabriele Leoni, web developer and designer in Rome. Websites, brand systems, AI agents, industrial ops. Facta non verba: I build machines that win.";
+
+const JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "Gabriele Leoni",
+      alternateName: "BASILISK",
+      url: SITE_URL,
+      jobTitle: "Web developer, designer, AI systems operator",
+      address: { "@type": "PostalAddress", addressLocality: "Rome", addressCountry: "IT" },
+      sameAs: ["https://github.com/Ezekie7607", "https://x.com/BasiliskosLeo"],
+    },
+    {
+      "@type": "WebSite",
+      name: "BASILISK — Gabriele Leoni",
+      url: SITE_URL,
+      inLanguage: ["en", "it"],
+    },
+  ],
+});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -33,10 +54,11 @@ export const Route = createRootRoute({
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
       { rel: "preload", href: "/fonts/switzer-400.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-      { rel: "preload", href: "/fonts/switzer-900.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: "/fonts/switzer-800.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: "/fonts/tempting.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "canonical", href: SITE_URL },
     ],
+    scripts: [{ type: "application/ld+json", children: JSON_LD }],
   }),
   component: RootComponent,
 });

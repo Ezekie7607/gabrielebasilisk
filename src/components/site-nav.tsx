@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile, type Lang } from "@/lib/content";
 import { useI18n } from "@/lib/locale";
 import { cn } from "@/lib/utils";
@@ -32,6 +32,14 @@ export function SiteNav() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  // Every close path routes through here. Escape used to leave focus wherever the Tab walk had
+  // wandered — in practice on a hero CTA behind the panel — so a keyboard reader who opened,
+  // tabbed and dismissed ended up somewhere unrelated with no visible focus ring.
+  const close = () => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -43,7 +51,7 @@ export function SiteNav() {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -53,6 +61,22 @@ export function SiteNav() {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  // Focus containment. The panel is a 95%-opaque plate over the whole viewport, but nothing used
+  // to take the page underneath out of the tab order: a Tab walk with the menu open ran off the
+  // last menu link straight onto the hero CTAs, which are ghosts under the plate — an invisible
+  // focus indicator (WCAG 2.4.11) on top of a broken focus order (2.4.3). `inert` on <main> is the
+  // same property the panel already uses on itself when closed. The header is deliberately NOT
+  // inerted: it sits at z-50, above the z-40 plate, so the brand link, the language switch and the
+  // close button are all still visible — and the close button has to stay reachable.
+  useEffect(() => {
+    const main = document.querySelector("main");
+    if (!main) return;
+    main.inert = open;
+    return () => {
+      main.inert = false;
     };
   }, [open]);
 
@@ -98,6 +122,7 @@ export function SiteNav() {
           <div className="flex items-center gap-3 md:hidden">
             <LangSwitch />
             <button
+              ref={toggleRef}
               type="button"
               className="relative flex size-11 items-center justify-center text-fg"
               aria-expanded={open}
@@ -131,13 +156,16 @@ export function SiteNav() {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         inert={!open}
+        role="dialog"
+        aria-modal={open}
+        aria-label={t.openMenu}
       >
         <nav className="flex flex-col gap-2" aria-label="Mobile">
           {t.nav.map((item, i) => (
             <a
               key={item.href}
               href={item.href}
-              onClick={() => setOpen(false)}
+              onClick={close}
               className="flex items-baseline justify-between border-b border-border py-4"
             >
               <span className="font-display text-section text-fg">{item.label}</span>
@@ -147,7 +175,7 @@ export function SiteNav() {
           <a
             href={`mailto:${profile.email}`}
             className="mt-6 font-pixel text-sm tracking-widest text-primary"
-            onClick={() => setOpen(false)}
+            onClick={close}
           >
             {profile.email}
           </a>

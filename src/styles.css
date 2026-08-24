@@ -16,22 +16,8 @@
 }
 @font-face {
   font-family: "Switzer";
-  src: url("/fonts/switzer-700.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Switzer";
   src: url("/fonts/switzer-800.woff2") format("woff2");
   font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Switzer";
-  src: url("/fonts/switzer-900.woff2") format("woff2");
-  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
@@ -47,7 +33,7 @@
   --color-bg: #000000;
   --color-surface: #111114;
   --color-fg: #f3efe6;
-  --color-muted: #8c887e;
+  --color-muted: #99958b;
   --color-primary: #e8e2d4;
   --color-border: #2a2a2e;
   --color-ink: #08080a;
@@ -58,6 +44,8 @@
   --font-script: "Tempting", "Great Vibes", cursive;
 
   --text-display: clamp(2.5rem, 1rem + 5.2vw, 4.3rem);
+  /* Centred hero headline: compact so the upper 60% of the viewport stays with the sphere. */
+  --text-hero: clamp(1.75rem, 0.8rem + 3.1vw, 3.05rem);
   --text-section: clamp(1.9rem, 1rem + 3.4vw, 4.5rem);
   --text-quote: clamp(1.05rem, 0.75rem + 0.9vw, 1.4rem);
   --text-micro: 0.6875rem;
@@ -158,6 +146,17 @@
   }
 }
 
+/* The hero copy is bottom-anchored in an h-svh box, so its height is exactly the free band the
+   WebGL orchestrator sizes the sphere into. On a 667px-tall phone the four stat cards (174px with
+   their rule and margin) left an 8px band and the fit solve dropped the sphere altogether — the
+   hero went text-only on every iPhone SE/8-class device. Under 700px of height the stats step
+   aside so the hero keeps its object; every taller phone still gets them. */
+@media (max-width: 767px) and (max-height: 700px) {
+  .hero-stats {
+    display: none;
+  }
+}
+
 .pixel-grid {
   background-image:
     linear-gradient(rgb(243 239 230 / 0.045) 1px, transparent 1px),
@@ -247,13 +246,6 @@
   }
 }
 
-@keyframes hero-drift {
-  to {
-    transform: translateY(-22vh) scale(0.94);
-    opacity: 0;
-  }
-}
-
 @keyframes strip-pan {
   from {
     transform: translateX(12%);
@@ -290,13 +282,24 @@
   }
 }
 
-@supports (animation-timeline: scroll()) {
-  .hero-flow {
-    animation: hero-drift 1s linear both;
-    animation-timeline: scroll();
-    animation-range: 0vh 38vh;
-  }
+/* The copy clears the frame for the detonation. Cut against --hero-out — the same 0..1 the
+   WebGL beats read — instead of a scroll-driven animation, so the two can never drift apart and
+   the fade lands on the exact scroll position where the shell goes off. */
+.hero-flow {
+  /* 0.16 → 0.40. The window runs past the start of the detonation on purpose: ending it at 0.36
+     left ~100px of scroll with an empty black frame between the last legible line and the first
+     lit arm. Held here, the blast is already burning while the last line is still readable.
+     Kept in step with FADE_DONE in scroll-root.tsx, which drops the hit area and inerts the
+     subtree on the same number. */
+  --hero-fade: clamp(0, calc((var(--hero-out, 0) - 0.16) / 0.24), 1);
+  opacity: calc(1 - var(--hero-fade) * var(--hero-fade));
+  /* Down and back, not up: the ball is travelling DOWN to the frame's centre through this exact
+     window, and a copy rising to meet it put a live headline under the collapsing shell. */
+  transform: translateY(calc(var(--hero-fade) * 7vh)) scale(calc(1 - var(--hero-fade) * 0.05));
+  will-change: opacity, transform;
+}
 
+@supports (animation-timeline: scroll()) {
   .flow-strip-text {
     animation: strip-pan 1s linear both;
     animation-timeline: scroll();
@@ -321,6 +324,12 @@
   }
 
   .scroll-progress {
+    transform: none;
+  }
+
+  /* No implosion to clear the frame for, so the copy simply stays. */
+  .hero-flow {
+    opacity: 1;
     transform: none;
   }
 
