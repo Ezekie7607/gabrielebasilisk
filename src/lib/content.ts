@@ -36,7 +36,7 @@ export const en = {
     { value: "50Y", label: "Family industrial DNA" },
     { value: "22", label: "Already in the arena" },
     { value: "07", label: "Shipped systems" },
-    { value: "RM", label: "Rome — not a cafe" },
+    { value: "RM", label: "Rome, not a cafe" },
   ],
   marquee: [
     "WEB",
@@ -63,12 +63,12 @@ export const en = {
     {
       num: "02",
       title: "Aesthetics without discipline is decoration.",
-      body: "Pretty is cheap. I design things that convert, load, and last — then I make them look inevitable.",
+      body: "Pretty is cheap. I design things that convert, load, and last. Then I make them look inevitable.",
     },
     {
       num: "03",
       title: "If it doesn't ship, it doesn't exist.",
-      body: "Talk is a hobby. Repos, catalogs, themes, agents — that's the scoreboard.",
+      body: "Talk is a hobby. Repos, catalogs, themes, agents: that's the scoreboard.",
     },
     {
       num: "04",
@@ -106,7 +106,7 @@ export const en = {
       {
         num: "04",
         title: "Industrial ops",
-        body: "Roma Lift SRL — forklifts, platforms, cleaning machines. Digital meets the warehouse floor.",
+        body: "Roma Lift SRL: forklifts, platforms, cleaning machines. Digital meets the warehouse floor.",
       },
       {
         num: "05",
@@ -124,7 +124,7 @@ export const en = {
     kicker: "04 — Contact",
     titleA: "Stop scrolling.",
     titleB: "Send the brief.",
-    body: "Sites. Systems. Agents. Brand. If you want a template, this is the wrong door. If you want a machine — talk.",
+    body: "Sites. Systems. Agents. Brand. If you want a template, this is the wrong door. If you want a machine, talk.",
     write: "Write now",
   },
   location: profile.location,
@@ -137,7 +137,7 @@ export const it = {
     { href: "#arsenal", label: "Arsenale" },
     { href: "#contact", label: "Contatto" },
   ],
-  hire: "Assumi",
+  hire: "Assumimi",
   openMenu: "Apri menu",
   closeMenu: "Chiudi menu",
   hero: {
@@ -155,7 +155,7 @@ export const it = {
     { value: "50Y", label: "DNA industriale di famiglia" },
     { value: "22", label: "Già nell'arena" },
     { value: "07", label: "Sistemi shippati" },
-    { value: "RM", label: "Roma — non un caffè" },
+    { value: "RM", label: "Roma, non un caffè" },
   ],
   marquee: [
     "WEB",
@@ -182,12 +182,12 @@ export const it = {
     {
       num: "02",
       title: "L'estetica senza disciplina è decorazione.",
-      body: "Il bello è a buon mercato. Disegno cose che convertono, caricano, durano — poi le rendo inevitabili.",
+      body: "Il bello è a buon mercato. Disegno cose che convertono, caricano, durano. Poi le rendo inevitabili.",
     },
     {
       num: "03",
       title: "Se non shippa, non esiste.",
-      body: "Parlare è un hobby. Repo, cataloghi, theme, agenti — quello è il tabellone.",
+      body: "Parlare è un hobby. Repo, cataloghi, theme, agenti: quello è il tabellone.",
     },
     {
       num: "04",
@@ -200,12 +200,12 @@ export const it = {
       body: "Un operatore. Full stack. Sangue industriale di famiglia, armi digitali. Lo stesso uomo.",
     },
   ],
-  strip: "COSTRUISCI LA MACCHINA · POI UN'ALTRA · FACTA NON VERBA · LA DISCIPLINA COMPOUND ·",
+  strip: "COSTRUISCI LA MACCHINA · POI UN'ALTRA · FACTA NON VERBA · LA DISCIPLINA È INTERESSE COMPOSTO ·",
   arsenal: {
     kicker: "03 — Arsenale",
     titleA: "Faccio tutto lo stack.",
     titleB: "Perché gli specialisti si fermano.",
-    body: "Il design senza codice è un moodboard. Il codice senza distribuzione è un giocattolo. Gli agenti senza un operatore sono un circo. Io tengo tutto.",
+    body: "Il design senza codice è un moodboard. Il codice senza distribuzione è un giocattolo. Gli agenti senza un operatore sono un circo. Io mando avanti tutto.",
     items: [
       {
         num: "01",
@@ -225,7 +225,7 @@ export const it = {
       {
         num: "04",
         title: "Ops industriale",
-        body: "Roma Lift SRL — muletti, piattaforme, macchine da pulizia. Il digitale incontra il magazzino.",
+        body: "Roma Lift SRL: muletti, piattaforme, macchine per la pulizia. Il digitale incontra il magazzino.",
       },
       {
         num: "05",
@@ -243,7 +243,7 @@ export const it = {
     kicker: "04 — Contatto",
     titleA: "Smetti di scrollare.",
     titleB: "Manda il brief.",
-    body: "Siti. Sistemi. Agenti. Brand. Se vuoi un template, porta sbagliata. Se vuoi una macchina — parla.",
+    body: "Siti. Sistemi. Agenti. Brand. Se vuoi un template, porta sbagliata. Se vuoi una macchina, parla.",
     write: "Scrivi ora",
   },
   location: profile.locationIt,
