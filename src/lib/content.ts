@@ -28,15 +28,15 @@ export const en = {
     h1b: "potential.",
     h1c: "I build machines",
     h1d: "that win.",
-    lead: `${profile.name}. Web, design, AI agents, industrial ops. One operator. No committees. Rome.`,
+    lead: `${profile.name}. Web, design, AI systems, industrial operations. One operator, no committees, no theatre. Rome.`,
     enter: "Enter the doctrine",
     brief: "Send the brief",
   },
   stats: [
     { value: "50Y", label: "Family industrial DNA" },
     { value: "22", label: "Already in the arena" },
-    { value: "07", label: "Shipped systems" },
-    { value: "RM", label: "Rome, not a cafe" },
+    { value: "07", label: "Systems in production" },
+    { value: "RM", label: "Rome, base of operations" },
   ],
   marquee: [
     "WEB",
@@ -52,41 +52,41 @@ export const en = {
     kicker: "02 — Doctrine",
     titleA: "The talk is simple.",
     titleB: "The work is not.",
-    body: "Most people want a pep talk. I want a system that still runs when motivation dies. That is the difference between a hobby and a weapon.",
+    body: "Encouragement is cheap. A system that runs without it is not. That is the difference between a pastime and a weapon.",
   },
   laws: [
     {
       num: "01",
-      title: "Motivation is for the weak.",
-      body: "The strong build systems. I don't wait to feel ready. I ship, then I raise the standard.",
+      title: "Motivation expires. Systems don't.",
+      body: "I don't wait to feel ready. The work starts on schedule, and the standard rises after every delivery.",
     },
     {
       num: "02",
       title: "Aesthetics without discipline is decoration.",
-      body: "Pretty is cheap. I design things that convert, load, and last. Then I make them look inevitable.",
+      body: "Beauty is easy. I design things that convert, load, and last. Then I make them look inevitable.",
     },
     {
       num: "03",
       title: "If it doesn't ship, it doesn't exist.",
-      body: "Talk is a hobby. Repos, catalogs, themes, agents: that's the scoreboard.",
+      body: "Talk is a hobby. Delivered work is the only record: repositories, catalogues, systems, agents.",
     },
     {
       num: "04",
       title: "Agents work. You direct.",
-      body: "I don't collect prompts. I design factories: Hunter, Voicer, Composer, Coach, Amplifier.",
+      body: "I don't collect prompts. I build the factory that uses them: Hunter, Voicer, Composer, Coach, Amplifier.",
     },
     {
       num: "05",
       title: "Rome was not built by committees.",
-      body: "One operator. Full stack. Family industrial blood, digital weapons. Same man.",
+      body: "Fifty years of family industry behind me. The digital front ahead. The same hands.",
     },
   ],
   strip: "BUILD THE MACHINE · THEN BUILD ANOTHER · FACTA NON VERBA · DISCIPLINE COMPOUNDS ·",
   arsenal: {
     kicker: "03 — Arsenal",
     titleA: "I do the whole stack.",
-    titleB: "Because specialists stall.",
-    body: "Design without code is a moodboard. Code without distribution is a toy. Agents without an operator are a circus. I run all of it.",
+    titleB: "Because handoffs are where projects die.",
+    body: "Design without code is a moodboard. Code without distribution is a toy. Agents without an operator are noise. I run the whole chain.",
     items: [
       {
         num: "01",
@@ -111,7 +111,7 @@ export const en = {
       {
         num: "05",
         title: "Brand & growth",
-        body: "SEO, AEO, social systems, the distribution layer most designers pretend isn't their job.",
+        body: "SEO, AEO, social systems: the distribution layer most studios ignore.",
       },
       {
         num: "06",
@@ -122,10 +122,10 @@ export const en = {
   },
   contact: {
     kicker: "04 — Contact",
-    titleA: "Stop scrolling.",
+    titleA: "You've seen enough.",
     titleB: "Send the brief.",
-    body: "Sites. Systems. Agents. Brand. If you want a template, this is the wrong door. If you want a machine, talk.",
-    write: "Write now",
+    body: "Sites, systems, agents, brand. If you want a template, this is the wrong address. If you want a machine that works while you sleep, write.",
+    write: "Write me",
   },
   location: profile.location,
 };
@@ -137,7 +137,7 @@ export const it = {
     { href: "#arsenal", label: "Arsenale" },
     { href: "#contact", label: "Contatto" },
   ],
-  hire: "Assumimi",
+  hire: "Ingaggiami",
   openMenu: "Apri menu",
   closeMenu: "Chiudi menu",
   hero: {
@@ -147,15 +147,15 @@ export const it = {
     h1b: "potenziale.",
     h1c: "Costruisco macchine",
     h1d: "che vincono.",
-    lead: `${profile.name}. Web, design, agenti AI, ops industriale. Un operatore. Niente comitati. Roma.`,
+    lead: `${profile.name}. Web, design, sistemi AI, operazioni industriali. Un solo operatore, nessun comitato, nessun teatro. Roma.`,
     enter: "Entra nella dottrina",
     brief: "Manda il brief",
   },
   stats: [
     { value: "50Y", label: "DNA industriale di famiglia" },
     { value: "22", label: "Già nell'arena" },
-    { value: "07", label: "Sistemi shippati" },
-    { value: "RM", label: "Roma, non un caffè" },
+    { value: "07", label: "Sistemi in produzione" },
+    { value: "RM", label: "Roma, base operativa" },
   ],
   marquee: [
     "WEB",
@@ -171,41 +171,41 @@ export const it = {
     kicker: "02 — Dottrina",
     titleA: "Il discorso è semplice.",
     titleB: "Il lavoro no.",
-    body: "La maggior parte vuole una pep talk. Io voglio un sistema che gira anche quando la motivazione è morta. Quella è la differenza tra un hobby e un'arma.",
+    body: "Gli incoraggiamenti costano poco. Un sistema che gira senza è un'altra cosa. Questa è la differenza tra un passatempo e un'arma.",
   },
   laws: [
     {
       num: "01",
-      title: "La motivazione è per i deboli.",
-      body: "I forti costruiscono sistemi. Non aspetto di sentirmi pronto. Shippo, poi alzo lo standard.",
+      title: "La motivazione scade. I sistemi no.",
+      body: "Non aspetto di sentirmi pronto. Il lavoro parte in orario e lo standard sale a ogni consegna.",
     },
     {
       num: "02",
       title: "L'estetica senza disciplina è decorazione.",
-      body: "Il bello è a buon mercato. Disegno cose che convertono, caricano, durano. Poi le rendo inevitabili.",
+      body: "Il bello è facile. Io disegno cose che convertono, caricano, durano. Poi le rendo inevitabili.",
     },
     {
       num: "03",
-      title: "Se non shippa, non esiste.",
-      body: "Parlare è un hobby. Repo, cataloghi, theme, agenti: quello è il tabellone.",
+      title: "Se non va in produzione, non esiste.",
+      body: "Parlare è un hobby. Conta solo il lavoro consegnato: repository, cataloghi, sistemi, agenti.",
     },
     {
       num: "04",
       title: "Gli agenti lavorano. Tu dirigi.",
-      body: "Non colleziono prompt. Progetto fabbriche: Hunter, Voicer, Composer, Coach, Amplifier.",
+      body: "Non colleziono prompt. Costruisco la fabbrica che li usa: Hunter, Voicer, Composer, Coach, Amplifier.",
     },
     {
       num: "05",
       title: "Roma non l'hanno costruita i comitati.",
-      body: "Un operatore. Full stack. Sangue industriale di famiglia, armi digitali. Lo stesso uomo.",
+      body: "Cinquant'anni di industria di famiglia alle spalle. Il fronte digitale davanti. Le stesse mani.",
     },
   ],
-  strip: "COSTRUISCI LA MACCHINA · POI UN'ALTRA · FACTA NON VERBA · LA DISCIPLINA È INTERESSE COMPOSTO ·",
+  strip: "COSTRUISCI LA MACCHINA · POI COSTRUISCINE UN'ALTRA · FACTA NON VERBA · LA DISCIPLINA È INTERESSE COMPOSTO ·",
   arsenal: {
     kicker: "03 — Arsenale",
     titleA: "Faccio tutto lo stack.",
-    titleB: "Perché gli specialisti si fermano.",
-    body: "Il design senza codice è un moodboard. Il codice senza distribuzione è un giocattolo. Gli agenti senza un operatore sono un circo. Io mando avanti tutto.",
+    titleB: "Perché i passaggi di mano ammazzano i progetti.",
+    body: "Il design senza codice è un moodboard. Il codice senza distribuzione è un giocattolo. Gli agenti senza un operatore sono rumore. Io mando avanti l'intera catena.",
     items: [
       {
         num: "01",
@@ -230,7 +230,7 @@ export const it = {
       {
         num: "05",
         title: "Brand e crescita",
-        body: "SEO, AEO, sistemi social, il layer di distribuzione che i designer fingono non sia il loro lavoro.",
+        body: "SEO, AEO, sistemi social: il layer di distribuzione che gli studi ignorano.",
       },
       {
         num: "06",
@@ -241,10 +241,10 @@ export const it = {
   },
   contact: {
     kicker: "04 — Contatto",
-    titleA: "Smetti di scrollare.",
+    titleA: "Hai visto abbastanza.",
     titleB: "Manda il brief.",
-    body: "Siti. Sistemi. Agenti. Brand. Se vuoi un template, porta sbagliata. Se vuoi una macchina, parla.",
-    write: "Scrivi ora",
+    body: "Siti, sistemi, agenti, brand. Se cerchi un template, indirizzo sbagliato. Se cerchi una macchina che lavora anche quando dormi, scrivi.",
+    write: "Scrivimi",
   },
   location: profile.locationIt,
 };
