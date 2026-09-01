@@ -17,20 +17,68 @@ export function Doctrine() {
         </div>
       </div>
 
-      <section id="doctrine" className="relative">
+      <section aria-labelledby="doctrine-title" id="doctrine" className="relative">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] lg:gap-16">
             <div className="flow-in lg:sticky lg:top-24 lg:self-start">
               <p className="font-pixel text-micro tracking-widest text-muted">
                 {t.doctrine.kicker}
               </p>
-              <h2 className="mt-4 leading-tight text-fg">
-                <span className="block font-display text-section">{t.doctrine.titleA}</span>
-                <span className="font-script mt-2 block text-[clamp(1.6rem,3.4vw,2.6rem)]">
-                  {t.doctrine.titleB}
+              {/* Setup dim, payoff bright: the same device the hero h1 already uses, so the page
+                  carries one idea four times instead of four ideas once. The script used to take
+                  this second line, which put every punchline in the lightest voice on the page. */}
+              <h2 id="doctrine-title" className="mt-4 leading-tight text-fg">
+                <span className="reveal-slot block">
+                  <span className="reveal-line block font-display text-section text-muted">
+                    {t.doctrine.titleA}
+                  </span>
                 </span>
+                <span className="block font-display text-section">{t.doctrine.titleB}</span>
               </h2>
               <p className="mt-5 max-w-md text-base leading-normal text-muted">{t.doctrine.body}</p>
+
+              {/* Index rail. The sticky column used to end here, which at 1440x900 left ~420px of
+                  empty sticky black beside the list. The rail fills it with the five titles and an
+                  SVG line that draws as the section scrolls, so the column tracks the list it sits
+                  beside. aria-hidden: the real content is the <ol> to the right, this is wayfinding. */}
+              <div className="relative mt-12 hidden lg:block" aria-hidden="true">
+                <svg
+                  className="absolute left-[3px] top-2 h-[calc(100%-1rem)] w-0.5 overflow-visible text-border"
+                  viewBox="0 0 2 100"
+                  preserveAspectRatio="none"
+                  fill="none"
+                >
+                  <line
+                    x1="1"
+                    y1="0"
+                    x2="1"
+                    y2="100"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    vectorEffect="non-scaling-stroke"
+                    pathLength={1}
+                    className="svg-draw"
+                  />
+                </svg>
+                <ol className="flex flex-col gap-5 pl-7">
+                  {t.laws.map((law) => (
+                    <li key={law.num} className="relative flex items-baseline gap-3">
+                      <svg
+                        className="absolute -left-7 top-1/2 size-[7px] -translate-y-1/2 text-muted/70"
+                        viewBox="0 0 8 8"
+                      >
+                        <circle cx="4" cy="4" r="3" fill="currentColor" />
+                      </svg>
+                      <span className="font-pixel text-micro tracking-widest text-muted/60">
+                        {law.num}
+                      </span>
+                      <span className="font-pixel text-micro tracking-widest text-muted">
+                        {law.title}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
             <ol className="flex flex-col">
               {t.laws.map((law, i) => (

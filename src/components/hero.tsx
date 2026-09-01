@@ -1,4 +1,5 @@
 import { ArrowDownRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/locale";
 
@@ -7,11 +8,10 @@ import { useI18n } from "@/lib/locale";
  * the three WebGL beats need: the sphere implodes, detonates, then settles into the galaxy while
  * the reader is still inside this section. `#top` is what scroll-root measures for flow.heroOut.
  *
- * Every vertical gap below is tighter on phones than on desktop, and `.hero-stats` drops out
- * entirely under 700px of viewport height (see styles.css). That is not cosmetic: the copy is
+ * Every vertical gap below is tighter on phones than on desktop. That is not cosmetic: the copy is
  * bottom-anchored in an `h-svh` box, so its height IS the free band the WebGL orchestrator sizes
- * the sphere into. At the shipped desktop spacing a 375x667 phone left an 8px band and the hero
- * lost its object completely.
+ * the sphere into. At desktop spacing a 375x667 phone once left an 8px band and the hero lost its
+ * object completely, so anything added to this block is taken straight off the sphere.
  */
 export function Hero() {
   const { t } = useI18n();
@@ -21,40 +21,56 @@ export function Hero() {
         <div className="copy-veil pointer-events-none absolute inset-x-0 bottom-0 h-[62%]" />
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-9 pt-24 sm:px-6 sm:pb-12">
           <div id="hero-copy" className="hero-flow relative mx-auto w-full max-w-3xl text-center">
-            <p className="stagger-in font-pixel text-micro tracking-widest text-muted">
-              {t.hero.kicker}
-            </p>
-            <p className="font-script stagger-in mt-4 text-[clamp(1.4rem,3.4vw,2.15rem)] text-fg">
-              {t.hero.motto}
+            {/* Each block carries .hero-fall with its own --i (drop stagger) and --r (rotation
+                scatter): as --hero-fade runs 0..1 the lines detach on separate arcs instead of the
+                copy leaving as one slab. Values are small on purpose; the WebGL detonation is the
+                spectacle, the text just gets out of its way with intent. */}
+            <p className="font-script stagger-in text-[clamp(1.4rem,3.4vw,2.15rem)] text-fg">
+              <span
+                className="hero-fall block"
+                style={{ "--i": 0, "--r": -3 } as CSSProperties}
+              >
+                {t.hero.motto}
+              </span>
             </p>
             <h1 className="stagger-in mt-2 text-balance font-display text-hero leading-display text-fg">
-              {t.hero.h1a} {t.hero.h1b}
-              <br />
-              <span className="text-muted">{t.hero.h1c}</span> {t.hero.h1d}
+              <span
+                className="hero-fall block"
+                style={{ "--i": 1, "--r": 2 } as CSSProperties}
+              >
+                {t.hero.h1a} {t.hero.h1b}
+              </span>
+              <span
+                className="hero-fall block"
+                style={{ "--i": 2, "--r": -2 } as CSSProperties}
+              >
+                <span className="text-muted">{t.hero.h1c}</span> {t.hero.h1d}
+              </span>
             </h1>
             <p className="stagger-in mx-auto mt-5 max-w-xl text-base leading-normal text-muted">
-              {t.hero.lead}
+              <span
+                className="hero-fall block"
+                style={{ "--i": 3, "--r": 1 } as CSSProperties}
+              >
+                {t.hero.lead}
+              </span>
             </p>
-            <div className="stagger-in mt-5 flex flex-wrap items-center justify-center gap-3 sm:mt-7">
-              <Button asChild>
-                <a href="#doctrine">
-                  {t.hero.enter}
-                  <ArrowDownRight className="size-4" />
-                </a>
-              </Button>
-              <Button asChild variant="ghost">
-                <a href="#contact">{t.hero.brief}</a>
-              </Button>
+            <div className="stagger-in mt-5 sm:mt-7">
+              <div
+                className="hero-fall flex flex-wrap items-center justify-center gap-3"
+                style={{ "--i": 4, "--r": -1 } as CSSProperties}
+              >
+                <Button asChild>
+                  <a href="#work">
+                    {t.hero.enter}
+                    <ArrowDownRight className="size-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="ghost">
+                  <a href="#contact">{t.hero.brief}</a>
+                </Button>
+              </div>
             </div>
-
-            <dl className="hero-stats stagger-in mx-auto mt-5 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-4 border-t border-border/60 pt-4 sm:mt-8 sm:grid-cols-4 sm:gap-x-0 sm:gap-y-5 sm:divide-x sm:divide-border/60 sm:pt-5">
-              {t.stats.map((stat) => (
-                <div key={stat.label} className="sm:px-4">
-                  <dt className="font-pixel text-micro tracking-widest text-muted">{stat.label}</dt>
-                  <dd className="mt-1.5 font-display text-lg text-fg tabular-nums">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
       </div>

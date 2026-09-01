@@ -83,8 +83,8 @@ export function SiteNav() {
   return (
     <>
       <a
-        href="#doctrine"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-skip focus:bg-primary focus:px-4 focus:py-2 focus:text-ink"
+        href="#work"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-primary focus:px-4 focus:py-2 focus:text-ink"
       >
         {t.skip}
       </a>
@@ -106,14 +106,14 @@ export function SiteNav() {
               <a
                 key={item.href}
                 href={item.href}
-                className="font-pixel text-micro tracking-widest text-muted transition-colors duration-150 hover:text-fg"
+                className="font-pixel text-label tracking-widest text-muted transition-colors duration-150 hover:text-fg"
               >
                 {item.label}
               </a>
             ))}
             <a
               href={`mailto:${profile.email}`}
-              className="font-pixel text-micro tracking-widest text-fg"
+              className="font-pixel text-label tracking-widest text-fg"
             >
               {t.hire}
             </a>
@@ -158,7 +158,7 @@ export function SiteNav() {
         inert={!open}
         role="dialog"
         aria-modal={open}
-        aria-label={t.openMenu}
+        aria-label="Menu"
       >
         <nav className="flex flex-col gap-2" aria-label="Mobile">
           {t.nav.map((item, i) => (

@@ -5,22 +5,24 @@ import appCss from "../styles.css?url";
 const APP_NAME = "Gabriele Leoni — Web, Design, AI Agents · BASILISK";
 const SITE_URL = "https://gabrielebasilisk.vercel.app";
 const DESCRIPTION =
-  "Gabriele Leoni, web developer and designer in Rome. Websites, brand systems, AI agents, industrial ops. Facta non verba: I build machines that win.";
+  "Gabriele Leoni, web developer and designer. Websites, visual identity and automation for small and mid-sized companies.";
 
 const JSON_LD = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
       name: "Gabriele Leoni",
       alternateName: "BASILISK",
       url: SITE_URL,
-      jobTitle: "Web developer, designer, AI systems operator",
-      address: { "@type": "PostalAddress", addressLocality: "Rome", addressCountry: "IT" },
+      jobTitle: "Web developer and designer",
       sameAs: ["https://github.com/Ezekie7607", "https://x.com/BasiliskosLeo"],
     },
     {
       "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      publisher: { "@id": `${SITE_URL}/#person` },
       name: "BASILISK — Gabriele Leoni",
       url: SITE_URL,
       inLanguage: ["en", "it"],
@@ -44,6 +46,8 @@ export const Route = createRootRoute({
       { property: "og:image", content: `${SITE_URL}/og.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "BASILISK — Gabriele Leoni" },
+      { property: "og:locale", content: "it_IT" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@BasiliskosLeo" },
       { name: "twitter:title", content: APP_NAME },

@@ -7,6 +7,7 @@ import PixelField from "@/components/pixel-field";
 import { ScrollRoot } from "@/components/scroll-root";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
+import { MotionGallery } from "@/components/motion-gallery";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -20,6 +21,7 @@ function Home() {
       <SiteNav />
       <main className="relative z-10 text-fg">
         <Hero />
+        <MotionGallery />
         <Doctrine />
         <Arsenal />
         <ContactBlock />

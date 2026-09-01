@@ -36,6 +36,16 @@
   --color-muted: #99958b;
   --color-primary: #e8e2d4;
   --color-border: #2a2a2e;
+  /* The Arsenal grid lines are the only thing separating six adjacent cards, and at border/40 they
+     measured 1.11:1 on black, effectively invisible. Strict 1.4.11 would want 3:1, which turns the
+     quiet grid into a hard box, so this lands at ~2.2:1: the cells read as cells, the register
+     stays low. Deliberately short of the standard, by decision. */
+  --color-grid: #45454b;
+  /* Contact form field boundaries. The border token at 60% measures 1.20:1 on this black, which is
+     an input box the visitor cannot see, and a form control boundary is exactly what WCAG 2.1
+     SC 1.4.11 asks 3:1 of. This lands at 3.07:1: the fields read as fields and nothing else on the
+     page moves. Boundaries only, never text. */
+  --color-field: #5a5a60;
   --color-ink: #08080a;
 
   --font-sans: "Switzer", ui-sans-serif, system-ui, sans-serif;
@@ -43,18 +53,18 @@
   --font-pixel: "Switzer", ui-sans-serif, system-ui, sans-serif;
   --font-script: "Tempting", "Great Vibes", cursive;
 
-  --text-display: clamp(2.5rem, 1rem + 5.2vw, 4.3rem);
   /* Centred hero headline: compact so the upper 60% of the viewport stays with the sphere. */
   --text-hero: clamp(1.75rem, 0.8rem + 3.1vw, 3.05rem);
   --text-section: clamp(1.9rem, 1rem + 3.4vw, 4.5rem);
   --text-quote: clamp(1.05rem, 0.75rem + 0.9vw, 1.4rem);
   --text-micro: 0.6875rem;
+  /* Interactive labels. 11px is right for kickers, stat captions and the footer, but it is fine
+     print inside a 44px-tall CTA. Buttons and primary nav use this instead. */
+  --text-label: 0.8125rem;
 
   --leading-display: 0.96;
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-icon: cubic-bezier(0.2, 0, 0, 1);
-  --z-cursor: 70;
-  --z-skip: 80;
 
   --radius-sm: 2px;
   --radius-md: 6px;
@@ -63,6 +73,13 @@
 
   --shadow-border: 0 0 0 1px rgb(243 239 230 / 0.08);
   --shadow-border-hover: 0 0 0 1px rgb(243 239 230 / 0.16);
+  /* Outline for controls whose border IS the control: at 0.08 the ghost button's ring resolved to
+     rgb(19,19,18) on black, 1.14:1 against its own background, so "Manda il brief" read as loose
+     text beside the filled primary. WCAG 1.4.11 wants 3:1 on a UI component boundary. Measured:
+     0.32 was still only 2.46:1 on the page and 2.66:1 over the ghost's hover surface. 0.42 is the
+     first value that clears 3:1 in BOTH states (3.56:1 and 3.71:1). */
+  --shadow-outline: 0 0 0 1px rgb(243 239 230 / 0.42);
+  --shadow-outline-hover: 0 0 0 1px rgb(243 239 230 / 0.55);
 }
 
 @layer base {
@@ -72,6 +89,12 @@
     background: var(--color-bg);
     color: var(--color-fg);
     scroll-behavior: smooth;
+    /* Without this the UA still paints scrollbars, form controls and the overscroll gutter in its
+       light scheme, which on a pure-black page is the one bright edge nobody designed. */
+    color-scheme: dark;
+    /* The fixed header is 57px under 640 and 65px above it. Anchor jumps landed clear only because
+       every section carries py-20; this stops that being load-bearing. */
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -96,18 +119,49 @@
     cursor: pointer;
   }
 
+  /* Kills the 300ms tap delay on the CTAs and nav links without disabling zoom. */
+  a,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
   ::selection {
     background: var(--color-fg);
     color: var(--color-bg);
   }
+
+  /* There was no author focus style anywhere, so focus fell to the UA ring: 3.51:1 in Chrome on
+     this black, weaker in Safari, and a saturated system blue against a strictly monochrome page.
+     #f3efe6 measures 18.30:1 here, and the offset keeps the ring on the black page rather than on
+     the cream fill of the primary button. */
+  :focus-visible {
+    outline: 2px solid var(--color-fg);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
 }
+
+/* These three belong in the COMPONENTS layer, not at top level and not in utilities. Unlayered
+   rules outrank every layered one, so at top level they silently beat any Tailwind utility used
+   alongside them: font-medium on a .font-display heading resolved to 800 (which is why
+   switzer-500.woff2 shipped and rendered on nothing), and .ghost-num's colour beat the group-hover
+   tint the Arsenal cards were written to have. Utilities does not fix it either — same specificity
+   as Tailwind's own classes, and ours are emitted later, so ours still win on source order.
+   Components sits below utilities, so a utility now overrides these by layer order, as intended. */
+@layer components {
 
 .font-script {
   font-family: var(--font-script);
   font-weight: 400;
   font-style: normal;
   letter-spacing: 0;
-  line-height: 0.85;
+  /* Tempting is a calligraphic face: its ascenders and descenders run far past the em box. At the
+     old 0.85 the line box was 35px under a 42px glyph, so any headline that wrapped collided with
+     itself — "Perche i passaggi di / mano ammazzano i progetti" in Arsenal overlapped on every
+     width from 375 up. Measured on the rendered Arsenal headline: at 1.08 the two font bounding
+     boxes still overlapped by 8px, so 1.32 is the first ratio that clears the swashes outright. */
+  line-height: 1.32;
 }
 
 .font-display {
@@ -122,6 +176,16 @@
   line-height: 0.85;
   color: rgb(243 239 230 / 0.1);
   font-variant-numeric: tabular-nums;
+}
+
+/* Optical tracking has to loosen as size drops: -0.045em is right on a 53px head and welds the
+   counters shut on a 20px card title. These are the only sub-24px .font-display call sites. */
+.font-display.text-quote,
+.font-display.text-xl,
+.font-display.text-lg {
+  letter-spacing: -0.018em;
+}
+
 }
 
 .copy-veil {
@@ -143,17 +207,6 @@
       rgb(8 8 10 / 0.4) 80%,
       rgb(8 8 10 / 0) 100%
     );
-  }
-}
-
-/* The hero copy is bottom-anchored in an h-svh box, so its height is exactly the free band the
-   WebGL orchestrator sizes the sphere into. On a 667px-tall phone the four stat cards (174px with
-   their rule and margin) left an 8px band and the fit solve dropped the sphere altogether — the
-   hero went text-only on every iPhone SE/8-class device. Under 700px of height the stats step
-   aside so the hero keeps its object; every taller phone still gets them. */
-@media (max-width: 767px) and (max-height: 700px) {
-  .hero-stats {
-    display: none;
   }
 }
 
@@ -299,6 +352,120 @@
   will-change: opacity, transform;
 }
 
+/* The "cadere": each hero line detaches on its own arc as the copy clears the frame. Driven by the
+   inherited --hero-fade, NOT a view() timeline, so it is scrubbed by the exact scroll window the
+   WebGL detonation reads and the two can never desynchronise. --i staggers the drop, --r scatters
+   the rotation. Transform-only; the parent's opacity curve does the fading. */
+.hero-fall {
+  transform: translateY(calc(var(--hero-fade, 0) * (8vh + var(--i, 0) * 5vh)))
+    rotate(calc(var(--hero-fade, 0) * var(--r, 0) * 1deg));
+  will-change: transform;
+}
+
+/* Masked line reveal: the showroom entrance. The slot clips; the line rises out of it as the
+   heading scrolls into view. WebKit requires animation-timeline AFTER the animation shorthand. */
+.reveal-slot {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-line {
+      animation: reveal-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    /* Works images: held zoom + parallax drift. The image stays a step oversized for the whole
+       ride and drifts vertically across the entire time it is on screen, so it is visibly in
+       motion at every scroll position, not only on arrival; the wrapper's clip turns the drift
+       into a camera move. The constant 1.12 scale is what hides the drifting edges. */
+    .img-reveal {
+      animation: img-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* Works captions: reading highlight. Opacity-only scrub from murmur to full as the block
+       crosses into view; the cheapest effect on the page. */
+    .scrub-fade {
+      animation: scrub-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes img-drift {
+  from {
+    transform: scale(1.12) translateY(5%);
+  }
+  to {
+    transform: scale(1.12) translateY(-5%);
+  }
+}
+
+@keyframes scrub-fade {
+  /* Floor measured, not chosen: muted #99958b needs >=0.778 opacity on black to hold 4.5:1, and a
+     scroll-scrubbed opacity is a STABLE state (stop scrolling and it stays), so 1.4.3 applies at
+     every position. 0.78 still reads murmur-to-full; 0.25 read as 1.38:1. */
+  from {
+    opacity: 0.78;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* SVG line-draw, scroll-driven. Every consumer sets pathLength={1} on the stroked element, so
+   dasharray/dashoffset work in normalised units regardless of the line's real length. Three states:
+   browsers with view-timelines draw the stroke as it scrolls into view, browsers without them show
+   the finished line (never a hidden one), and reduced-motion shows the finished line outright. */
+@keyframes svg-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.svg-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@supports (animation-timeline: view()) {
+  .svg-draw {
+    animation: svg-draw 1s linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 55%;
+  }
+
+  /* Stagger variants for multi-stroke compositions: same draw, shifted windows, so a grid of
+     strokes assembles in waves instead of as one gesture. */
+  .svg-draw.draw-1 {
+    animation-range: entry 0% cover 40%;
+  }
+
+  .svg-draw.draw-2 {
+    animation-range: entry 10% cover 60%;
+  }
+
+  .svg-draw.draw-3 {
+    animation-range: entry 25% cover 80%;
+  }
+}
+
 @supports (animation-timeline: scroll()) {
   .flow-strip-text {
     animation: strip-pan 1s linear both;
@@ -319,18 +486,42 @@
   .flow-in-later,
   .hero-flow,
   .flow-strip-text,
+  .svg-draw,
   .pixel-grid {
     animation: none;
   }
 
+  /* The finished line, not a hidden one. */
+  .svg-draw {
+    stroke-dashoffset: 0;
+  }
+
+  /* Not `transform: none` — without the scaleX the bar sits at its natural full width and reports
+     100% scrolled at every position, which is false information from a non-text indicator. */
   .scroll-progress {
-    transform: none;
+    display: none;
   }
 
   /* No implosion to clear the frame for, so the copy simply stays. */
   .hero-flow {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-fall,
+  .reveal-line {
+    transform: none;
+    animation: none;
+  }
+
+  .scrub-fade {
+    opacity: 1;
+    animation: none;
+  }
+
+  .img-reveal {
+    transform: none;
+    animation: none;
   }
 
   .stagger-in,
